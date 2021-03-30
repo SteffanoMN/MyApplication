@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         addData();
 
-        adapter = new MahasiswaAdapter(mahasiswaArrayList);
+        adapter = new MahasiswaAdapter(mahasiswaArrayList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
