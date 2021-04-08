@@ -1,49 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    card_view:cardCornerRadius="6dp"
-    card_view:cardElevation="3dp"
-    card_view:cardUseCompatPadding="true"
-    android:id="@+id/mainlayout">
+    android:layout_height="match_parent"
+    tools:context=".MahasiswaAdapter">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/mainlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:orientation="vertical"
-        android:padding="5dp">
+        app:cardCornerRadius="6dp"
+        app:cardElevation="3dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <!-- TextView Nama Mahasiwa -->
-        <TextView
-            android:text="nama"
-            android:id="@+id/txt_nama_mahasiswa"
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:clickable="true"
+            android:orientation="vertical"
+            android:padding="5dp">
 
-        <!-- TextView Npm Mahasiswa -->
-        <TextView
-            android:text="nim"
-            android:id="@+id/txt_npm_mahasiswa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <!-- TextView Nama Mahasiwa -->
+            <TextView
+                android:id="@+id/txt_nama_mahasiswa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="nama" />
 
-        <!-- TextView NoHp Mahasiswa -->
-        <TextView
-            android:text="no hp"
-            android:id="@+id/txt_nohp_mahasiswa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <!-- TextView NoHp Mahasiswa -->
-        <TextView
-            android:text="email"
-            android:id="@+id/txtemail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <!-- TextView Npm Mahasiswa -->
+            <TextView
+                android:id="@+id/txt_npm_mahasiswa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="nim" />
 
-    </LinearLayout>
+            <!-- TextView NoHp Mahasiswa -->
+            <TextView
+                android:id="@+id/txt_nohp_mahasiswa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="no hp" />
+            <!-- TextView NoHp Mahasiswa -->
+            <TextView
+                android:id="@+id/txtemail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="email" />
 
-</androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

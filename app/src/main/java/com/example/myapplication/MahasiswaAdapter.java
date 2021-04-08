@@ -5,60 +5,112 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.MahasiswaViewHolder> {
+public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.MahasiswaViewHolder> implements Filterable {
 
     private ArrayList<Mahasiswa> dataList;
+    private ArrayList<Mahasiswa> dataListFilter;
     Context CT;
+    boolean isDark = false;
+
+    public MahasiswaAdapter(ArrayList<Mahasiswa> dataList, Context CT, boolean isDark) {
+        this.dataList = dataList;
+        this.CT = CT;
+        this.isDark = isDark;
+        this.dataListFilter = dataList;
+    }
 
     public MahasiswaAdapter(ArrayList<Mahasiswa> dataList, Context Con) {
         this.dataList = dataList;
-        CT = Con;
+        this.CT = Con;
+        this.dataListFilter = dataList;
     }
 
     @Override
     public MahasiswaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        LayoutInflater layoutInflater = LayoutInflater.from(CT);
         View view = layoutInflater.inflate(R.layout.itemview, parent, false);
-        // method ini gunanya untuk menghubungkan ke layout itemview
         return new MahasiswaViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MahasiswaViewHolder holder, int position) {
-        // 0 : Ani , 1 : Budi
-        holder.txtNama.setText(dataList.get(position).getNama());
-        holder.txtNpm.setText(dataList.get(position).getNim());
-        holder.txtNoHp.setText(dataList.get(position).getNohp());
-        holder.txtemail.setText(dataList.get(position).getEmail());
+        holder.MainLayout.setAnimation(AnimationUtils.loadAnimation(CT, R.anim.fade_transition));
+        holder.txtNama.setText(dataListFilter.get(position).getNama());
+        holder.txtNpm.setText(dataListFilter.get(position).getNim());
+        holder.txtNoHp.setText(dataListFilter.get(position).getNohp());
+        holder.txtemail.setText(dataListFilter.get(position).getEmail());
         holder.MainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent NewMain = new Intent(CT, MahasiswaDetails.class);
-                NewMain.putExtra("Nama", dataList.get(position).getNama());
-                NewMain.putExtra("Nim", dataList.get(position).getNim());
-                NewMain.putExtra("Nomor", dataList.get(position).getNohp());
-                NewMain.putExtra("Email", dataList.get(position).getEmail());
+                NewMain.putExtra("Nama", dataListFilter.get(position).getNama());
+                NewMain.putExtra("Nim", dataListFilter.get(position).getNim());
+                NewMain.putExtra("Nomor", dataListFilter.get(position).getNohp());
+                NewMain.putExtra("Email", dataListFilter.get(position).getEmail());
                 CT.startActivity(NewMain);
             }
         });
     }
 
-    // data nya berapa = 2, index 0 dan 1
     @Override
     public int getItemCount() {
-        return (dataList != null) ? dataList.size() : 0;
+        return (dataListFilter != null) ? dataListFilter.size() : 0;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String Key = constraint.toString();
+                if (Key.isEmpty()){
+                    dataListFilter = dataList;
+                } else {
+                    ArrayList<Mahasiswa> isFiltered = new ArrayList<>();
+                    for (Mahasiswa row : dataList) {
+                        if (row.getNama().toLowerCase().contains(Key)) {
+                            isFiltered.add(row);
+                        }
+                        if (row.getEmail().toLowerCase().contains(Key)) {
+                            isFiltered.add(row);
+                        }
+                        if (row.getNohp().toLowerCase().contains(Key)) {
+                            isFiltered.add(row);
+                        }
+                        if (row.getNim().toLowerCase().contains(Key)) {
+                            isFiltered.add(row);
+                        }
+                    }
+                    dataListFilter = isFiltered;
+                }
+                FilterResults results = new FilterResults();
+                results.values = dataListFilter;
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                dataListFilter = (ArrayList<Mahasiswa>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class MahasiswaViewHolder extends RecyclerView.ViewHolder{
         private TextView txtNama, txtNpm, txtNoHp , txtemail;
-        ConstraintLayout MainLayout;
+        CardView MainLayout;
 
         public MahasiswaViewHolder(View itemView) {
             super(itemView);
@@ -66,7 +118,20 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
             txtNpm = (TextView) itemView.findViewById(R.id.txt_npm_mahasiswa);
             txtNoHp = (TextView) itemView.findViewById(R.id.txt_nohp_mahasiswa);
             txtemail = (TextView) itemView.findViewById(R.id.txtemail);
-            MainLayout = (ConstraintLayout) itemView.findViewById(R.id.mainlayout);
+            MainLayout = (CardView) itemView.findViewById(R.id.mainlayout);
+
+            if(isDark) {
+                setDarkTheme();
+            }
+
         }
+
+        private void setDarkTheme() {
+
+            MainLayout.setBackgroundResource(R.drawable.card_bg_dark);
+
+        }
+
     }
+
 }
