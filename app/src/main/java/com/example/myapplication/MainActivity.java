@@ -21,65 +21,44 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private MahasiswaAdapter adapter;
-    private ArrayList<Mahasiswa> mahasiswaArrayList;
-    private FloatingActionButton fabSwitcher;
-    boolean isDark = false;
+    private MicrosoftAdapter adapter;
+    private ArrayList<Microsoft> microsoftArrayList;
     ConstraintLayout rootLayout;
     EditText search;
     CharSequence searchresult="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        recyclerView = (RecyclerView) findViewById(R.id.rvdata);
-        fabSwitcher = (FloatingActionButton) findViewById(R.id.brightness);
-        rootLayout = (ConstraintLayout) findViewById(R.id.rootlayout);
-        search = (EditText) findViewById(R.id.search_input);
-
-        requestWindowFeature(getWindow().FEATURE_NO_TITLE);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         getSupportActionBar().hide();
+        setContentView(R.layout.activity_main);
 
-        addData();
+        recyclerView = (RecyclerView) findViewById(R.id.rvdata);
+        rootLayout = (ConstraintLayout) findViewById(R.id.rootlayout);
+        search = (EditText) findViewById(R.id.search_input);
+        microsoftArrayList = new ArrayList<>();
 
-        mahasiswaArrayList = new ArrayList<>();
-        adapter = new MahasiswaAdapter(mahasiswaArrayList, this, isDark);
+        microsoftArrayList = new ArrayList<>();
+        int[] images = {R.drawable.word, R.drawable.powerpoint, R.drawable.excel, R.drawable.sway,
+                R.drawable.sharepoint, R.drawable.onenote, R.drawable.teams, R.drawable.outlook};  ;
+        microsoftArrayList.add(new Microsoft("Microsoft Word", "4.2.0", "new and super polished word document app", images[0]));
+        microsoftArrayList.add(new Microsoft("Microsoft Powerpoint", "3.9.0", "email", images[1]));
+        microsoftArrayList.add(new Microsoft("Microsoft Excel", "2.2.2", "email budi", images[2]));
+        microsoftArrayList.add(new Microsoft("Microsoft Sway", "2.2.2", "email budi", images[3]));
+        microsoftArrayList.add(new Microsoft("Microsoft Sharepoint", "2.2.2", "email budi", images[4]));
+        microsoftArrayList.add(new Microsoft("Microsoft Onenotet", "2.2.2", "email budi", images[5]));
+        microsoftArrayList.add(new Microsoft("Microsoft Teams", "2.2.2", "email budi", images[6]));
+        Microsoft Outlook = new Microsoft("Microsoft Outlook", "5.7.1" , "sari@gmail.com", images[7]);
+        microsoftArrayList.add(Outlook);
+
+
+        adapter = new MicrosoftAdapter(microsoftArrayList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-        isDark = getThemePref();
-        if(isDark) {
-            rootLayout.setBackgroundColor(getResources().getColor(R.color.black));
-            search.setBackgroundResource(R.drawable.search_style_dark);
-        } else {
-            search.setBackgroundResource(R.drawable.search_style);
-            rootLayout.setBackgroundColor(getResources().getColor(R.color.white));
-        }
-
-        fabSwitcher.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            isDark = !isDark;
-            if(isDark){
-                search.setBackgroundResource(R.drawable.search_style_dark);
-                rootLayout.setBackgroundColor(getResources().getColor(R.color.black));
-            } else {
-                search.setBackgroundResource(R.drawable.search_style);
-                rootLayout.setBackgroundColor(getResources().getColor(R.color.white));
-            }
-            adapter = new MahasiswaAdapter( mahasiswaArrayList, getApplicationContext(), isDark);
-            if (!searchresult.toString().isEmpty()) {
-                adapter.getFilter().filter(searchresult);
-            }
-            recyclerView.setAdapter(adapter);
-            saveThemePref(isDark);
-            }
-            });
 
         search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -96,28 +75,6 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
         });
-    }
-
-    private void saveThemePref(boolean isDark) {
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("myPref", MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean("isDark", isDark);
-        editor.commit();
-    }
-
-    private boolean getThemePref() {
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("myPref", MODE_PRIVATE);
-        boolean isDark = pref.getBoolean("isDark", false);
-        return isDark;
-    }
-
-    void addData(){
-        mahasiswaArrayList = new ArrayList<>();
-        mahasiswaArrayList.add(new Mahasiswa("Dimas Maulana", "999", "081222","email"));
-        mahasiswaArrayList.add(new Mahasiswa("Budi", "000", "081222", "email"));
-        mahasiswaArrayList.add(new Mahasiswa("Ani", "222", "083333", "email budi"));
-        Mahasiswa Sari = new Mahasiswa("Sari", "xxx" , "000", "sari@gmail.com");
-        mahasiswaArrayList.add(Sari);
     }
 
 }

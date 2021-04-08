@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MahasiswaAdapter">
+    android:layout_height="wrap_content"
+    tools:context=".MicrosoftAdapter">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/mainlayout"
@@ -18,42 +18,48 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:clickable="true"
-            android:orientation="vertical"
-            android:padding="5dp">
+            android:layout_height="100dp">
 
-            <!-- TextView Nama Mahasiwa -->
             <TextView
-                android:id="@+id/txt_nama_mahasiswa"
-                android:layout_width="match_parent"
+                android:id="@+id/txtName"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:text="nama" />
+                android:layout_marginStart="96dp"
+                android:layout_marginLeft="96dp"
+                android:layout_marginBottom="4dp"
+                android:text="name"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.09" />
 
-            <!-- TextView Npm Mahasiswa -->
             <TextView
-                android:id="@+id/txt_npm_mahasiswa"
-                android:layout_width="match_parent"
+                android:id="@+id/txtDesc"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:text="nim" />
+                android:layout_marginStart="96dp"
+                android:layout_marginLeft="96dp"
+                android:text="Description"
+                android:textSize="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtName"
+                app:layout_constraintVertical_bias="0.0" />
 
-            <!-- TextView NoHp Mahasiswa -->
-            <TextView
-                android:id="@+id/txt_nohp_mahasiswa"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="no hp" />
-            <!-- TextView NoHp Mahasiswa -->
-            <TextView
-                android:id="@+id/txtemail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="email" />
+            <ImageView
+                android:id="@+id/imgProduct"
+                android:layout_width="81dp"
+                android:layout_height="87dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/ic_launcher_background"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txtDesc"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
