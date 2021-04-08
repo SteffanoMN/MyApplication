@@ -35,7 +35,7 @@ public class MahasiswaDetails extends AppCompatActivity {
 
         Back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 Intent BackLayout = new Intent(MahasiswaDetails.this, MahasiswaAdapter.class);
                 startActivity(BackLayout);
             }
@@ -59,5 +59,6 @@ public class MahasiswaDetails extends AppCompatActivity {
         Email.setText(Text3);
         NPM.setText(Text4);
     }
+
 
 }
