@@ -44,14 +44,28 @@ public class MainActivity extends AppCompatActivity {
         microsoftArrayList = new ArrayList<>();
         int[] images = {R.drawable.word, R.drawable.powerpoint, R.drawable.excel, R.drawable.sway,
                 R.drawable.sharepoint, R.drawable.onenote, R.drawable.teams, R.drawable.outlook};  ;
-        microsoftArrayList.add(new Microsoft("Microsoft Word", "4.2.0", "new and super polished word document app", images[0]));
-        microsoftArrayList.add(new Microsoft("Microsoft Powerpoint", "3.9.0", "email", images[1]));
-        microsoftArrayList.add(new Microsoft("Microsoft Excel", "2.2.2", "email budi", images[2]));
-        microsoftArrayList.add(new Microsoft("Microsoft Sway", "2.2.2", "email budi", images[3]));
-        microsoftArrayList.add(new Microsoft("Microsoft Sharepoint", "2.2.2", "email budi", images[4]));
-        microsoftArrayList.add(new Microsoft("Microsoft Onenotet", "2.2.2", "email budi", images[5]));
-        microsoftArrayList.add(new Microsoft("Microsoft Teams", "2.2.2", "email budi", images[6]));
-        Microsoft Outlook = new Microsoft("Microsoft Outlook", "5.7.1" , "sari@gmail.com", images[7]);
+        microsoftArrayList.add(new Microsoft("Microsoft Word", "16.47", "The trusted Word app lets you create, edit, view," +
+                " and share your files with others quickly and easily. Send, view and edit Office docs attached to emails from your phone with this " +
+                "powerful word processing app.", images[0]));
+        microsoftArrayList.add(new Microsoft("Microsoft Powerpoint", "16.47", "The PowerPoint app gives you access to the " +
+                "familiar slideshow maker tool you already know. Create, edit, view, present, or share presentations quickly and easily from anywhere.", images[1]));
+        microsoftArrayList.add(new Microsoft("Microsoft Excel", "16.47.1", "Microsoft Excel, the spreadsheet app, lets you " +
+                "create, view, edit, and share your files quickly and easily. Manage spreadsheets, tables and workbooks attached to email messages from" +
+                " your phone with this powerful productivity app.", images[2]));
+        microsoftArrayList.add(new Microsoft("Microsoft Sway", "1.20.1", "Create visually striking newsletters, presentations, and" +
+                " documentation in minutes. Sway is integrated with your device, social networks, and the web. Sway suggests searches to help you find relevant" +
+                " contents that you can add right into your creation. Sway's design engine brings your content together beautifully. Sway is for you", images[3]));
+        microsoftArrayList.add(new Microsoft("Microsoft Sharepoint", "3.24.0", "Your mobile, intelligent intranet. Share and organize" +
+                " content, knowledge and apps to drive teamwork. Quickly find information and get work done collaboratively and seamlessly across the organization.", images[4]));
+        microsoftArrayList.add(new Microsoft("Microsoft Onenote", "16.47", "Capture your thoughts, discoveries, and ideas and " +
+                "simplify overwhelming planning moments in your life with your very own digital notepad. With OneNote, you can plan that big event, seize" +
+                " that moment of inspiration to create something new, and track that list of errands that are too important to forget.", images[5]));
+        microsoftArrayList.add(new Microsoft("Microsoft Teams", "1.00.330874", "Microsoft Teams is your hub for teamwork," +
+                " which brings together everything a team needs: chat and threaded conversations, meetings & video conferencing, calling, content collaboration" +
+                " with the power of Microsoft 365 applications, and the ability to create and integrate apps and workflows that your business relies on.", images[6]));
+        Microsoft Outlook = new Microsoft("Microsoft Outlook", "16.47" , "Outlook is making it easier to identify emails from" +
+                " senders outside your organization to protect against spam & phishing threats. If admin configured, there will be a new external label" +
+                " on emails and the sender's email address can be viewed by tapping the external label at the top of the email.", images[7]);
         microsoftArrayList.add(Outlook);
 
 
