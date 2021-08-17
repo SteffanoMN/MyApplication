@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".MicrosoftAdapter">
+    tools:context=".MovieAdapter">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/mainlayout"
@@ -18,52 +18,49 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
+            android:id="@+id/rv_layout_list"
             android:layout_width="match_parent"
-            android:layout_height="100dp">
-
-            <TextView
-                android:id="@+id/txtName"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="96dp"
-                android:layout_marginLeft="96dp"
-                android:layout_marginTop="6dp"
-                android:text="name"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.22" />
-
-            <TextView
-                android:id="@+id/txtDesc"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="3"
-                android:text="Description"
-                android:textSize="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imgProduct"
-                app:layout_constraintTop_toBottomOf="@+id/txtName"
-                app:layout_constraintVertical_bias="0.0"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"/>
+            android:layout_height="90dp"
+            android:padding="10dp">
 
             <ImageView
-                android:id="@+id/imgProduct"
-                android:layout_width="81dp"
-                android:layout_height="87dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:src="@drawable/ic_launcher_background"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/txtName"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.461" />
+                android:id="@+id/img_list"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_launcher"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:layout_toRightOf="@id/img_list"
+                android:layout_toEndOf="@id/img_list" />
 
+            <TextView
+                android:id="@+id/reldate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Release date"
+                android:layout_toRightOf="@id/img_list"
+                android:layout_toEndOf="@id/img_list"
+                android:layout_below="@id/title"/>
+
+            <TextView
+                android:id="@+id/overview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Desc"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:layout_toRightOf="@id/img_list"
+                android:layout_toEndOf="@id/img_list"
+                android:layout_below="@id/reldate"/>
+
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

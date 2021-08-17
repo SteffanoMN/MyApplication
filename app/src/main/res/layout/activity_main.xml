@@ -25,6 +25,17 @@
         app:layout_constraintVertical_bias="0.0"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminateTint="@color/purple_700"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rvdata" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/Toolbar"
         android:layout_width="match_parent"
@@ -61,7 +72,7 @@
             android:id="@+id/Logoname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Microsoft App Store"
+            android:text="The Movie Database"
             android:textSize="28dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -73,13 +84,14 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Every of your microsoft app needs is here"
+            android:text="Millions of movies, TV shows and people to discover. Explore now."
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/Logoname"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="@+id/Logoname"
             app:layout_constraintTop_toBottomOf="@+id/Logoname"
-            app:layout_constraintVertical_bias="0.08" />
+            app:layout_constraintVertical_bias="0.08"
+            android:textSize="13dp"/>
 
         <ImageView
             android:id="@+id/imageView"
@@ -89,7 +101,8 @@
             app:layout_constraintEnd_toEndOf="@+id/Logoname"
             app:layout_constraintStart_toStartOf="@+id/Logoname"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/store" />
+            app:srcCompat="@drawable/mdb_logo" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MicrosoftAppDetails">
+    tools:context=".DetailActivity">
 
     <TextView
-        android:id="@+id/Name"
+        android:id="@+id/movie_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Application Name"
@@ -21,29 +21,29 @@
         />
 
     <TextView
-        android:id="@+id/Desc"
-        android:layout_width="360dp"
+        android:id="@+id/movie_release_date"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Description"
+        android:text="Release Date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Name"
+        app:layout_constraintTop_toBottomOf="@+id/movie_name"
         android:textSize="16dp"
         android:textAlignment="center"
         android:gravity="center_horizontal" />
 
     <TextView
-        android:id="@+id/Vers"
-        android:layout_width="wrap_content"
+        android:id="@+id/movie_desc"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Version Number"
+        android:text="Description"
         android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/Desc"
+        app:layout_constraintRight_toLeftOf="@+id/movie_release_date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Desc" />
+        app:layout_constraintTop_toBottomOf="@+id/movie_release_date" />
 
     <Button
         android:id="@+id/backbbutton"
@@ -57,12 +57,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imgProduct"
+        android:id="@+id/movie_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/Name"
-        app:layout_constraintEnd_toEndOf="@+id/Name"
-        app:layout_constraintStart_toStartOf="@+id/Name"
+        app:layout_constraintBottom_toTopOf="@+id/movie_name"
+        app:layout_constraintEnd_toEndOf="@+id/movie_name"
+        app:layout_constraintStart_toStartOf="@+id/movie_name"
         android:src="@drawable/ic_launcher_background" />
 </androidx.constraintlayout.widget.ConstraintLayout>

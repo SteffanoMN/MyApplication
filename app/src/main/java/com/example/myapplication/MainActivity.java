@@ -5,33 +5,123 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private MicrosoftAdapter adapter;
-    private ArrayList<Microsoft> microsoftArrayList;
+    private RecyclerView recview;
+    private MovieAdapter adapter;
+    private ArrayList<MovieModel> arrayList;
+    private ProgressBar progressBar;
     ConstraintLayout rootLayout;
     EditText search;
     CharSequence searchresult="";
+
+    void getData() {
+        AndroidNetworking.get("https://api.themoviedb.org/3/movie/upcoming?api_key=b9dfca59664f58a8ac10cb5506272133&language=en-US&page=1")
+                .addPathParameter("pageNumber", "0")
+                .addQueryParameter("limit", "3")
+                .addHeaders("token", "1234")
+                .setTag("test")
+                .setPriority(Priority.LOW)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray result = response.getJSONArray("results");
+                            for (int i = 0; i < result.length(); i++) {
+                                arrayList = new ArrayList<>();
+                                JSONObject movieObject = result.getJSONObject(i);
+                                String name = movieObject.getString("original_title");
+                                String date = movieObject.getString("release_date");
+                                String overview = movieObject.getString("overview");
+                                String image = movieObject.getString("poster_path");
+                                arrayList.add(new MovieModel(name, date, overview, image));
+                            }
+                            adapter = new MovieAdapter(arrayList, getApplicationContext());
+                            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                            recview.setLayoutManager(layoutManager);
+                            recview.setAdapter(adapter);
+                            AnimationSet set = new AnimationSet(true);
+
+                            Animation animation = new AlphaAnimation(0.0f, 1.0f);
+                            animation.setDuration(500);
+                            set.addAnimation(animation);
+
+                            animation = new TranslateAnimation(
+                                    Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                                    Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f
+                            );
+                            animation.setDuration(100);
+                            set.addAnimation(animation);
+
+                            LayoutAnimationController controller = new LayoutAnimationController(set, 0.5f);
+
+                            recview.setLayoutAnimation(controller);
+                            search.addTextChangedListener(new TextWatcher() {
+                                @Override
+                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                                }
+
+                                @Override
+                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                    adapter.getFilter().filter(s);
+                                    searchresult = s;
+                                }
+
+                                @Override
+                                public void afterTextChanged(Editable s) {
+                                }
+                            });
+                            adapter.setOnItemClickListener(new MovieAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(int position) {
+                                    Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+                                    intent.putExtra("original_title", arrayList.get(position).getOriginal_title());
+                                    intent.putExtra("poster_path", arrayList.get(position).getPoster_path());
+                                    intent.putExtra("release date", arrayList.get(position).getRelease_date());
+                                    intent.putExtra("overview", arrayList.get(position).getOverview());
+                                    startActivity(intent);
+                                }
+                            });
+                            progressBar.setVisibility(View.GONE);
+                        } catch (JSONException e) {
+                            Log.d("error", e.toString());
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.d("error", anError.toString());
+                    }
+                });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,78 +131,11 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
-
-        recyclerView = (RecyclerView) findViewById(R.id.rvdata);
+        recview = (RecyclerView) findViewById(R.id.rvdata);
         rootLayout = (ConstraintLayout) findViewById(R.id.rootlayout);
         search = (EditText) findViewById(R.id.search_input);
-        microsoftArrayList = new ArrayList<>();
-
-
-        AnimationSet set = new AnimationSet(true);
-
-        Animation animation = new AlphaAnimation(0.0f, 1.0f);
-        animation.setDuration(500);
-        set.addAnimation(animation);
-
-        animation = new TranslateAnimation(
-                Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f
-        );
-        animation.setDuration(100);
-        set.addAnimation(animation);
-
-        LayoutAnimationController controller = new LayoutAnimationController(set, 0.5f);
-
-        recyclerView.setLayoutAnimation(controller);
-
-        microsoftArrayList = new ArrayList<>();
-        int[] images = {R.drawable.word, R.drawable.powerpoint, R.drawable.excel, R.drawable.sway,
-                R.drawable.sharepoint, R.drawable.onenote, R.drawable.teams, R.drawable.outlook};  ;
-        microsoftArrayList.add(new Microsoft("Microsoft Word", "version 16.47", "The trusted Word app lets you create, edit, view," +
-                " and share your files with others quickly and easily. Send, view and edit Office docs attached to emails from your phone with this " +
-                "powerful word processing app.", images[0]));
-        microsoftArrayList.add(new Microsoft("Microsoft Powerpoint", "version 16.47", "The PowerPoint app gives you access to the " +
-                "familiar slideshow maker tool you already know. Create, edit, view, present, or share presentations quickly and easily from anywhere.", images[1]));
-        microsoftArrayList.add(new Microsoft("Microsoft Excel", "version 16.47.1", "Microsoft Excel, the spreadsheet app, lets you " +
-                "create, view, edit, and share your files quickly and easily. Manage spreadsheets, tables and workbooks attached to email messages from" +
-                " your phone with this powerful productivity app.", images[2]));
-        microsoftArrayList.add(new Microsoft("Microsoft Sway", "version 1.20.1", "Create visually striking newsletters, presentations, and" +
-                " documentation in minutes. Sway is integrated with your device, social networks, and the web. Sway suggests searches to help you find relevant" +
-                " contents that you can add right into your creation. Sway's design engine brings your content together beautifully. Sway is for you", images[3]));
-        microsoftArrayList.add(new Microsoft("Microsoft Sharepoint", "version 3.24.0", "Your mobile, intelligent intranet. Share and organize" +
-                " content, knowledge and apps to drive teamwork. Quickly find information and get work done collaboratively and seamlessly across the organization.", images[4]));
-        microsoftArrayList.add(new Microsoft("Microsoft Onenote", "version 16.47", "Capture your thoughts, discoveries, and ideas and " +
-                "simplify overwhelming planning moments in your life with your very own digital notepad. With OneNote, you can plan that big event, seize" +
-                " that moment of inspiration to create something new, and track that list of errands that are too important to forget.", images[5]));
-        microsoftArrayList.add(new Microsoft("Microsoft Teams", "version 1.00.330874", "Microsoft Teams is your hub for teamwork," +
-                " which brings together everything a team needs: chat and threaded conversations, meetings & video conferencing, calling, content collaboration" +
-                " with the power of Microsoft 365 applications, and the ability to create and integrate apps and workflows that your business relies on.", images[6]));
-        Microsoft Outlook = new Microsoft("Microsoft Outlook", "version 16.47" , "Outlook is making it easier to identify emails from" +
-                " senders outside your organization to protect against spam & phishing threats. If admin configured, there will be a new external label" +
-                " on emails and the sender's email address can be viewed by tapping the external label at the top of the email.", images[7]);
-        microsoftArrayList.add(Outlook);
-
-
-        adapter = new MicrosoftAdapter(microsoftArrayList, this);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
-
-        search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter.getFilter().filter(s);
-                searchresult = s;
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
+        progressBar = findViewById(R.id.progress_bar);
+        getData();
     }
 
 }
