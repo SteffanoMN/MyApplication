@@ -58,11 +58,10 @@ public class MainActivity extends AppCompatActivity {
                             for (int i = 0; i < result.length(); i++) {
                                 arrayList = new ArrayList<>();
                                 JSONObject movieObject = result.getJSONObject(i);
-                                String name = movieObject.getString("original_title");
-                                String date = movieObject.getString("release_date");
-                                String overview = movieObject.getString("overview");
-                                String image = movieObject.getString("poster_path");
-                                arrayList.add(new MovieModel(name, date, overview, image));
+                                arrayList.add(new MovieModel(movieObject.getString("original_title")
+                                        , movieObject.getString("release_date"),
+                                        movieObject.getString("overview"),
+                                        movieObject.getString("poster_path")));
                             }
                             adapter = new MovieAdapter(arrayList, getApplicationContext());
                             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
